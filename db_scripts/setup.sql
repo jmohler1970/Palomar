@@ -1,0 +1,37 @@
+
+
+USE [Enviance]
+GO
+
+
+
+CREATE TABLE [dbo].[Users](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[Email] [varchar](80) NOT NULL,
+	[Passhash] [char](32) NOT NULL,
+	[LastLogin] [smalldatetime] NOT NULL,
+	[ModifyDate] [smalldatetime] NOT NULL,
+	[CreateDate] [smalldatetime] NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_ModifyDate]  DEFAULT (getdate()) FOR [ModifyDate]
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_CreateDate]  DEFAULT (getdate()) FOR [CreateDate]
+GO
+
+
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Email] ON [dbo].[Users]
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+
+GO
+
